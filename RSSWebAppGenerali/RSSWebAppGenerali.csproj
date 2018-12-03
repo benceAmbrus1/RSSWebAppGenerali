@@ -206,7 +206,9 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RSSItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\RSSService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
