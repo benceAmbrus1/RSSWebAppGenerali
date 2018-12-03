@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RSSWebAppGenerali.Models.RSSItemModel>
+﻿@model IEnumerable<IEnumerable<RSSWebAppGenerali.Models.RSSItemModel>>
 @{
     ViewBag.Title = "Index";
 }
@@ -7,34 +7,33 @@
 <div>
     <p><strong>User Id:</strong> @ViewBag.UserId;</p>
 </div>
+<div>
+    <p>
+        @Html.ActionLink("Add a new RSS Html Link", "Index", "FeedLink")
+    </p>
+</div>
+
 <div class="row">
     <div class="col-md-6">
         <h2>Recent News</h2>
-        @foreach (var item in Model)
+        @foreach (var list in Model)
         {
-            <div>
-                <p><strong>***@item.Title***</strong></p>
-                <p>@item.Description</p>
-                <p>/@item.Category/</p>
-                <p>
-                    <a href="@item.Link">Details</a>
-                </p>
-            </div>
+            foreach (var item in list)
+            {
+                <div>
+                    <p><strong>***@item.Title***</strong></p>
+                    <p>@item.Description</p>
+                    <p>/@item.Category/</p>
+                    <p>
+                        <a href="@item.Link">Details</a>
+                    </p>
+                </div>
+            }
         }
     </div>
     <div class="col-xs-6">
         <h2>Favourite News</h2>
-        @foreach (var item in Model)
-        {
-            <div>
-                <p>@item.Title</p>
-                <p>@item.Description</p>
-                <p>@item.Category</p>
-                <p>
-                    <a href="@item.Link">Details</a>
-                </p>
-            </div>
-        }
+        
     </div>
 </div>
 

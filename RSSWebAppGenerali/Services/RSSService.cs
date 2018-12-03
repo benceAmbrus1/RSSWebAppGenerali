@@ -9,7 +9,7 @@ namespace RSSWebAppGenerali.Services
 {
     public class RSSService
     {
-        public static List<RSSItemModel> Read(string url)
+        public static List<RSSItemModel> Read(string url, int counter = 0)
         {
             List<RSSItemModel> listRssItems = new List<RSSItemModel>();
             try
@@ -17,18 +17,40 @@ namespace RSSWebAppGenerali.Services
                 XPathDocument document = new XPathDocument(url);
                 XPathNavigator navigator = document.CreateNavigator();
                 XPathNodeIterator nodes = navigator.Select("//item");
-                while (nodes.MoveNext())
+
+                if (counter != 0)
                 {
-                    XPathNavigator node = nodes.Current;
-                    listRssItems.Add(new RSSItemModel
+                    int n = 0;
+                    while (n<counter && nodes.MoveNext())
                     {
-                        Category = node.SelectSingleNode("category").Value,
-                        Description = node.SelectSingleNode("description").Value,
-                        Guid = node.SelectSingleNode("guid").Value,
-                        Link = node.SelectSingleNode("link").Value,
-                        PubDate = node.SelectSingleNode("pubDate").Value,
-                        Title = node.SelectSingleNode("title").Value
-                    });
+                        XPathNavigator node = nodes.Current;
+                        listRssItems.Add(new RSSItemModel
+                        {
+                            Category = node.SelectSingleNode("category").Value,
+                            Description = node.SelectSingleNode("description").Value,
+                            Guid = node.SelectSingleNode("guid").Value,
+                            Link = node.SelectSingleNode("link").Value,
+                            PubDate = node.SelectSingleNode("pubDate").Value,
+                            Title = node.SelectSingleNode("title").Value
+                        });
+                        n++;
+                    }
+                }
+                else
+                {
+                    while (nodes.MoveNext())
+                    {
+                        XPathNavigator node = nodes.Current;
+                        listRssItems.Add(new RSSItemModel
+                        {
+                            Category = node.SelectSingleNode("category").Value,
+                            Description = node.SelectSingleNode("description").Value,
+                            Guid = node.SelectSingleNode("guid").Value,
+                            Link = node.SelectSingleNode("link").Value,
+                            PubDate = node.SelectSingleNode("pubDate").Value,
+                            Title = node.SelectSingleNode("title").Value
+                        });
+                    }
                 }
             }
             catch
