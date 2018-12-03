@@ -9,9 +9,9 @@ namespace RSSWebAppGenerali.Services
 {
     public class RSSService
     {
-        public static List<RSSItem> Read(string url)
+        public static List<RSSItemModel> Read(string url)
         {
-            List<RSSItem> listRssItems = new List<RSSItem>();
+            List<RSSItemModel> listRssItems = new List<RSSItemModel>();
             try
             {
                 XPathDocument document = new XPathDocument(url);
@@ -20,7 +20,7 @@ namespace RSSWebAppGenerali.Services
                 while (nodes.MoveNext())
                 {
                     XPathNavigator node = nodes.Current;
-                    listRssItems.Add(new RSSItem
+                    listRssItems.Add(new RSSItemModel
                     {
                         Category = node.SelectSingleNode("category").Value,
                         Description = node.SelectSingleNode("description").Value,

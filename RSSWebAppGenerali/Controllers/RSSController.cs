@@ -4,6 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RSSWebAppGenerali.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using RSSWebAppGenerali.Models;
 
 namespace RSSWebAppGenerali.Controllers
 {
@@ -13,10 +17,9 @@ namespace RSSWebAppGenerali.Controllers
         public ActionResult Index()
         {
             String url = "https://www.gamestar.hu/site/rss/rss.xml";
-            ViewBag.listRssItems = RSSService.Read(url);
-            return View();
+            ViewBag.UserId = User.Identity.GetUserId();
+            List<RSSItemModel> rssList =  RSSService.Read(url);
+            return View(rssList);
         }
     }
-
-
 }
