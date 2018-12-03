@@ -2,6 +2,7 @@
 using RSSWebAppGenerali.DAOs;
 using RSSWebAppGenerali.Models;
 using RSSWebAppGenerali.Services;
+using System;
 using System.Web.Mvc;
 
 namespace RSSWebAppGenerali.Controllers
@@ -34,6 +35,14 @@ namespace RSSWebAppGenerali.Controllers
                     int records = db.SaveUserLinks(model);
                 }
             }
+            return RedirectToAction("Index");
+        }
+        
+        
+        public ActionResult DeleteFeedLink(int id)
+        {
+            FeedLinkDao db = new FeedLinkDao();
+            db.DeleteUserLink(id);
             return RedirectToAction("Index");
         }
     }

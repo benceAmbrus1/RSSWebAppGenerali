@@ -9,6 +9,21 @@ namespace RSSWebAppGenerali.Services
 {
     public class RSSService
     {
+        public static string ReadTitle(string url)
+        {
+            string title = "";
+            XPathDocument document = new XPathDocument(url);
+            XPathNavigator navigator = document.CreateNavigator();
+            XPathNodeIterator nodes = navigator.Select("//channel");
+            while (nodes.MoveNext())
+            {
+                XPathNavigator node = nodes.Current;
+
+                title = node.SelectSingleNode("title").Value;
+            }
+            return title;
+        }
+
         public static List<RSSItemModel> Read(string url, int counter = 0)
         {
             List<RSSItemModel> listRssItems = new List<RSSItemModel>();

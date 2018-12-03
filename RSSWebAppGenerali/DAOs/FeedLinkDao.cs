@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using Microsoft.AspNet.Identity;
 
 namespace RSSWebAppGenerali.DAOs
 {
@@ -14,10 +13,10 @@ namespace RSSWebAppGenerali.DAOs
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                string sql = @"select Link, UserId
+                string sql = @"select Id, Link, UserId
                             from dbo.AspNetFeedLinks
-                            where UserId = @Id";
-                return connection.Query<FeedLinkModel>(sql, new { Id = UserId }).ToList();
+                            where UserId = @userId";
+                return connection.Query<FeedLinkModel>(sql, new { userId = UserId }).ToList();
             }
         }
 
@@ -29,6 +28,17 @@ namespace RSSWebAppGenerali.DAOs
                                 values (@Link, @UserId)";
 
                 return connection.Execute(sql, data);
+            }
+        }
+
+        public int DeleteUserLink(int feedId)
+        {
+            using (IDbConnection connection = new SqlConnection(GetConnectionString()))
+            {
+                string sql = @"delete from dbo.AspNetFeedLinks
+                               where Id = " + feedId;
+
+                return connection.Execute(sql);
             }
         }
     }

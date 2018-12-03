@@ -28,15 +28,23 @@
             </div>
         </div>
     </div>
-}
-    <div>
-        @foreach (var item in ViewBag.FeedList)
-        {
-            <div>
-                <p>@item.Link</p>
-            </div>
-        }
+}  
+@foreach (var item in ViewBag.FeedList)
+{
+    <div class="row">
+        <div class="col-md-5">
+            <p>@item.Link</p>
+        </div>
+        <div class="col-md-2">
+            @Html.ActionLink(
+                "Delete",
+                "DeleteFeedLink",
+                new { id = item.Id },
+                new { onclick = "return confirm('Are you sure you wish to delete this article?');" }
+                )
+        </div>
     </div>
+}
 <div>
     @Html.ActionLink("Back to Home", "Index", "RSS")
 </div>

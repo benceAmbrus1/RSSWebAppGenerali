@@ -5,6 +5,7 @@ using RSSWebAppGenerali.Services;
 using Microsoft.AspNet.Identity;
 using RSSWebAppGenerali.Models;
 using RSSWebAppGenerali.DAOs;
+using RSSWebAppGenerali.DTOs;
 
 namespace RSSWebAppGenerali.Controllers
 {
@@ -15,14 +16,14 @@ namespace RSSWebAppGenerali.Controllers
         public ActionResult Index()
         {
             FeedLinkDao db = new FeedLinkDao();
-            List<List<RSSItemModel>> rssList = new List<List<RSSItemModel>>();
+            List<RSSItemDTO> rssList = new List<RSSItemDTO>();
 
             List<FeedLinkModel> feedLinkModels = db.LoadUserLinks(User.Identity.GetUserId());
             foreach (var feedLinkModel in feedLinkModels)
             {
                 if (RSSService.Read(feedLinkModel.Link, 2) != null)
                 {
-                    rssList.Add(RSSService.Read(feedLinkModel.Link, 2));
+                    rssList.Add(new RSSItemDTO(RSSService.ReadTitle(feedLinkModel.Link), RSSService.Read(feedLinkModel.Link, 2)));
                 }
             }
             return View(rssList);

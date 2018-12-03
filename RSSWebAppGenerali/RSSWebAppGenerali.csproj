@@ -206,6 +206,7 @@
     <Compile Include="Controllers\RSSController.cs" />
     <Compile Include="DAOs\FeedLinkDao.cs" />
     <Compile Include="DAOs\SqlDao.cs" />
+    <Compile Include="DTOs\RSSItemDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
