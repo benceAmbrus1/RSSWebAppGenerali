@@ -36,7 +36,7 @@ namespace RSSWebAppGenerali.DAOs
                 return connection.Query<RSSItemModel>(sql, new { userId = UserId, idUrl = IdUrl }).ToList();
             }
         }
-
+        
         public int SetFavourite(int Id)
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))

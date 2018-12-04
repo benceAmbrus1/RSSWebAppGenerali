@@ -20,6 +20,18 @@ namespace RSSWebAppGenerali.DAOs
             }
         }
 
+        public List<FeedLinkModel> LoadUserLinks(string UserId, string Title)
+        {
+            using (IDbConnection connection = new SqlConnection(GetConnectionString()))
+            {
+                string sql = @"select Id, Title, Link, UserId
+                            from dbo.AspNetFeedLinks
+                            where UserId = @userId
+                            and Title = @title";
+                return connection.Query<FeedLinkModel>(sql, new { userId = UserId, title = Title }).ToList();
+            }
+        }
+
         public int SaveUserLinks(FeedLinkModel data)
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using RSSWebAppGenerali.DAOs;
+using RSSWebAppGenerali.DTOs;
 using RSSWebAppGenerali.Models;
 using System;
 using System.Collections.Generic;
@@ -86,6 +87,23 @@ namespace RSSWebAppGenerali.Services
         {
             RSSDao db = new RSSDao();
             db.SaveRSSItem(rssItem);
+        }
+
+        public List<RSSItemDTO> ReturnUserAllRssWithTitle(string userID)
+        {
+            FeedLinkDao linkDb = new FeedLinkDao();
+            RSSDao rssDb = new RSSDao();
+
+            string userId = userID;
+            List<FeedLinkModel> links = linkDb.LoadUserLinks(userId);
+
+            List<RSSItemDTO> dtos = new List<RSSItemDTO>();
+            foreach (var feedLink in links)
+            {
+                RSSItemDTO dto = new RSSItemDTO(feedLink.Title, rssDb.LoadRSSItems(userId, feedLink.Link));
+                dtos.Add(dto);
+            }
+            return dtos;
         }
 
     }

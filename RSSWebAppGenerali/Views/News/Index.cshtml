@@ -3,54 +3,101 @@
 @{
     ViewBag.Title = "View";
 }
-@foreach (var item in Model)
-{
-<h2>@Html.DisplayFor(model => item.Category)</h2>
-    <table class="table">
-        <tr>
-            <th>
-                Title
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Link
-            </th>
-            <th>
-                Publish Date
-            </th>
-            <th>
 
-            </th>
-        </tr>
-        @foreach (var rssItem in item.RssList)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => rssItem.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => rssItem.Description)
-            </td>
-            <td>
-                <a href="@Html.DisplayFor(modelItem => rssItem.Link)">Ugrás a teljes hírhez</a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => rssItem.PubDate)
-            </td>
-            <td>
-                @if (rssItem.IsItFavourite)
+<h1>News</h1>
+<hr />
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/refreshOnShowChange.js"></script>
+<div class="row">
+    <div class="col-md-1"> Show:  </div>
+    <div class="col-md-4">
+        @{
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "All"
+            });
+            foreach (var item in Model)
+            {
+                listItems.Add(new SelectListItem
                 {
-                    @Html.ActionLink("Unfavourite", "SetFavourite", new { id = rssItem.Id})
-                }
-                else
-                {
-                    @Html.ActionLink("Favourite", "SetFavourite", new { id = rssItem.Id })
-                }
-
-            </td>
-        </tr>
+                    Text = item.Category
+                });
+            }
         }
-    </table>
-}
+        @Html.DropDownList("ModelDropDownList", listItems)
+    </div>
+    <div class="col-md-1"> Sort By:  </div>
+    <div class="col-md-4">
+        @{
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+            selectListItems.Add(new SelectListItem
+            {
+                Text = "All"
+            });
+            selectListItems.Add(new SelectListItem
+            {
+                Text = "UnRead"
+            });
+            selectListItems.Add(new SelectListItem
+            {
+                Text = "Read"
+            });
+        }
+        @Html.DropDownList("staticList", selectListItems)
+    </div>
+</div>
+
+<div id="tables">
+    @foreach (var item in Model)
+    {
+        <h2>@Html.DisplayFor(model => item.Category)</h2>
+        <table id="newsTable" class="table">
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Link
+                </th>
+                <th>
+                    Publish Date
+                </th>
+                <th>
+
+                </th>
+            </tr>
+            @foreach (var rssItem in item.RssList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => rssItem.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => rssItem.Description)
+                    </td>
+                    <td>
+                        <a href="@Html.DisplayFor(modelItem => rssItem.Link)">Ugrás a teljes hírhez</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => rssItem.PubDate)
+                    </td>
+                    <td>
+                        @if (rssItem.IsItFavourite)
+                        {
+                            @Html.ActionLink("Unfavourite", "SetFavourite", new { id = rssItem.Id })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Favourite", "SetFavourite", new { id = rssItem.Id })
+                        }
+
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</div>

@@ -17,19 +17,10 @@ namespace RSSWebAppGenerali.Controllers
         // Index called News on Frontend
         public ActionResult Index()
         {
-            FeedLinkDao linkDb = new FeedLinkDao();
-            RSSDao rssDb = new RSSDao();
-
             string userId = User.Identity.GetUserId();
-            List<FeedLinkModel> links = linkDb.LoadUserLinks(userId);
-
-            List<RSSItemDTO> dtos = new List<RSSItemDTO>();
-            foreach (var feedLink in links)
-            {
-                RSSItemDTO dto = new RSSItemDTO( feedLink.Title, rssDb.LoadRSSItems(userId, feedLink.Link));
-                dtos.Add(dto);
-            }
-            return View(dtos);
+            RSSService service = new RSSService();
+            
+            return View(service.ReturnUserAllRssWithTitle(userId));
         }
 
         public ActionResult SetFavourite(int id)
@@ -38,6 +29,30 @@ namespace RSSWebAppGenerali.Controllers
             db.SetFavourite(id);
 
             return RedirectToAction("Index");
+        }
+
+        
+        public ActionResult GetRSSByTitle(string title)
+        {
+            if(title == "All")
+            {
+                string userId = User.Identity.GetUserId();
+                RSSService service = new RSSService();
+
+                return Json(service.ReturnUserAllRssWithTitle(userId), JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                FeedLinkDao linkDb = new FeedLinkDao();
+                RSSDao rssDb = new RSSDao();
+                string userId = User.Identity.GetUserId();
+
+                List<FeedLinkModel> FeedLink = linkDb.LoadUserLinks(userId, title);
+                List<RSSItemDTO> dtos = new List<RSSItemDTO>();
+
+                dtos.Add( new RSSItemDTO(title, rssDb.LoadRSSItems(userId, FeedLink[0].Link)));
+                return Json(dtos, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
