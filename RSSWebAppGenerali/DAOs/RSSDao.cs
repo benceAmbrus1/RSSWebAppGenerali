@@ -15,8 +15,11 @@ namespace RSSWebAppGenerali.DAOs
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                string sql = @"insert into dbo.AspNetRSSItems (Title, Description, Link, Guid, Category, PubDate, IsItRead, IsItFavourite, UserId)
-                                values (@Title, @Description, @Link, @Guid, @Category, @PubDate, @IsItRead, @IsItFavourite, @UserId)";
+                string sql = @"If not EXISTS(Select 1 from dbo.AspNetRSSItems where Link = @Link )
+                                Begin
+                                    insert into dbo.AspNetRSSItems (Title, Description, Link, Guid, Category, PubDate, IsItRead, IsItFavourite, UserId)
+                                    values (@Title, @Description, @Link, @Guid, @Category, @PubDate, @IsItRead, @IsItFavourite, @UserId)
+                                End";
 
                 return connection.Execute(sql, data);
             }

@@ -24,9 +24,12 @@ namespace RSSWebAppGenerali.DAOs
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                string sql = @"insert into dbo.AspNetFeedLinks (Link, UserId)
-                                values (@Link, @UserId)";
-
+                string sql = @"If not EXISTS(Select 1 from dbo.AspNetFeedLinks where Link = @Link )
+                                Begin
+                                    insert into dbo.AspNetFeedLinks (Link, UserId)
+                                    values (@Link, @UserId)
+                                End";
+               
                 return connection.Execute(sql, data);
             }
         }
