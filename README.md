@@ -16,7 +16,7 @@ Connect your Database:
   where name="DefaultConnection", set connectionString attribute to
   match your database connectionString.
   
-## After setting is done execute the followin script in your database:
+## After setting is done execute the following script in your database:
 
 ```
 /****** Object:  Table [dbo].[AspNetFeedLinks]    Script Date: 2018. 12. 04. 22:41:51 ******/
