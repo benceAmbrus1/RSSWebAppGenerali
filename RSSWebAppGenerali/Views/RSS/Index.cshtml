@@ -21,13 +21,16 @@
                 <div>
                     <p><strong>***@item.Title***</strong></p>
                     <p>@item.Description</p>
-                    <p>/@item.Category/</p>
+                    
                     <div class="row">
+                        <div class=" col-md-4 ">
+                            <p>/@item.Category/</p>
+                        </div>
                         <div class=" col-md-2 ">
                             <a href="@item.Link">Details</a>
                         </div>
-                        <div class=" col-md-2 ">
-                            <a href="#">Favourite</a>
+                        <div class=" col-md-6 ">
+                            <p>@item.PubDate</p>
                         </div>
                     </div>
 
@@ -38,7 +41,26 @@
     </div>
     <div class="col-xs-6">
         <h2>Favourite News</h2>
-        
+        @foreach (var item in ViewBag.Favourites)
+        {
+            <div>
+                <p><strong>***@item.Title***</strong></p>
+                <p>@item.Description</p>
+
+                <div class="row">
+                    <div class=" col-md-4 ">
+                        <p>/@item.Category/</p>
+                    </div>
+                    <div class=" col-md-2 ">
+                        <a href="@item.Link">Details</a>
+                    </div>
+                    <div class=" col-md-6 ">
+                        <p>@item.PubDate</p>
+                    </div>
+                </div>
+            </div>
+            <h4 style="text-align:center">**********************************************************</h4>
+        }
     </div>
 </div>
 

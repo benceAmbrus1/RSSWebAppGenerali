@@ -13,7 +13,7 @@ namespace RSSWebAppGenerali.DAOs
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                string sql = @"select Id, Link, UserId
+                string sql = @"select Id, Title, Link, UserId
                             from dbo.AspNetFeedLinks
                             where UserId = @userId";
                 return connection.Query<FeedLinkModel>(sql, new { userId = UserId }).ToList();
@@ -26,8 +26,8 @@ namespace RSSWebAppGenerali.DAOs
             {
                 string sql = @"If not EXISTS(Select 1 from dbo.AspNetFeedLinks where Link = @Link )
                                 Begin
-                                    insert into dbo.AspNetFeedLinks (Link, UserId)
-                                    values (@Link, @UserId)
+                                    insert into dbo.AspNetFeedLinks (Title, Link, UserId)
+                                    values (@Title, @Link, @UserId)
                                 End";
                
                 return connection.Execute(sql, data);

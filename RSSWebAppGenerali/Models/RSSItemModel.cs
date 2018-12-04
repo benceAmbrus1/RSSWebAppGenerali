@@ -7,6 +7,7 @@ namespace RSSWebAppGenerali.Models
 {
     public class RSSItemModel
     {
+        public int Id { get; set; }
         public string  Title { get; set; }
         public string Description { get; set; }
         public string Link { get; set; }
@@ -16,5 +17,6 @@ namespace RSSWebAppGenerali.Models
         public bool IsItRead { get; set; } = false;
         public bool IsItFavourite { get; set; } = false;
         public string UserId { get; set; }
+        public string IdUrl { get; set; }
     }
 }

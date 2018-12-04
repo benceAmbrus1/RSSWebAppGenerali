@@ -20,6 +20,9 @@
             <th>
                 Publish Date
             </th>
+            <th>
+
+            </th>
         </tr>
         @foreach (var rssItem in item.RssList)
         {
@@ -36,8 +39,18 @@
             <td>
                 @Html.DisplayFor(modelItem => rssItem.PubDate)
             </td>
+            <td>
+                @if (rssItem.IsItFavourite)
+                {
+                    @Html.ActionLink("Unfavourite", "SetFavourite", new { id = rssItem.Id})
+                }
+                else
+                {
+                    @Html.ActionLink("Favourite", "SetFavourite", new { id = rssItem.Id })
+                }
+
+            </td>
         </tr>
         }
     </table>
 }
-<

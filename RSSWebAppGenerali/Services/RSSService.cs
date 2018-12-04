@@ -29,8 +29,8 @@ namespace RSSWebAppGenerali.Services
         public static List<RSSItemModel> Read(string url, int counter = 0, string userId = "")
         {
             List<RSSItemModel> listRssItems = new List<RSSItemModel>();
-            //try
-            //{
+            try
+            {
                 XPathDocument document = new XPathDocument(url);
                 XPathNavigator navigator = document.CreateNavigator();
                 XPathNodeIterator nodes = navigator.Select("//item");
@@ -66,17 +66,19 @@ namespace RSSWebAppGenerali.Services
                             Link = node.SelectSingleNode("link").Value,
                             PubDate = node.SelectSingleNode("pubDate").Value,
                             Title = node.SelectSingleNode("title").Value,
-                            UserId = userId
+                            UserId = userId,
+                            IdUrl = url
                         };
+
                         SaveLoadedRSSes(rssItem);
                         listRssItems.Add(rssItem);
                     }
                 }
-            //}
-            //catch
-            //{
-            //    listRssItems = null;
-            //}
+            }
+            catch
+            {
+                listRssItems = null;
+            }
             return listRssItems;
         }
 

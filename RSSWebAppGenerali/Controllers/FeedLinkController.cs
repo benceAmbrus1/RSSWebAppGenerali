@@ -10,7 +10,7 @@ namespace RSSWebAppGenerali.Controllers
     [Authorize]
     public class FeedLinkController : Controller
     {
-        
+        // Index called Manage on Frontend
         public ActionResult Index()
         {
             FeedLinkDao db = new FeedLinkDao();
@@ -31,6 +31,7 @@ namespace RSSWebAppGenerali.Controllers
                 else
                 {
                     FeedLinkDao db = new FeedLinkDao();
+                    model.Title = RSSService.ReadTitle(model.Link);
                     model.UserId = User.Identity.GetUserId();
                     int records = db.SaveUserLinks(model);
                 }
