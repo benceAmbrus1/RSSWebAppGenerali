@@ -24,7 +24,7 @@ namespace RSSWebAppGenerali.Controllers
         {
             if(ModelState.IsValid)
             {
-                if(RSSService.Read(model.Link) == null)
+                if(RSSService.Read(model.Link, 0, User.Identity.GetUserId()) == null)
                 {
                     return RedirectToAction("Index");
                 }

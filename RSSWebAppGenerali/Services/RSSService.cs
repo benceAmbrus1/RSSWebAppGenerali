@@ -1,4 +1,6 @@
-﻿using RSSWebAppGenerali.Models;
+﻿using Microsoft.AspNet.Identity;
+using RSSWebAppGenerali.DAOs;
+using RSSWebAppGenerali.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +26,11 @@ namespace RSSWebAppGenerali.Services
             return title;
         }
 
-        public static List<RSSItemModel> Read(string url, int counter = 0)
+        public static List<RSSItemModel> Read(string url, int counter = 0, string userId = "")
         {
             List<RSSItemModel> listRssItems = new List<RSSItemModel>();
-            try
-            {
+            //try
+            //{
                 XPathDocument document = new XPathDocument(url);
                 XPathNavigator navigator = document.CreateNavigator();
                 XPathNodeIterator nodes = navigator.Select("//item");
@@ -56,23 +58,33 @@ namespace RSSWebAppGenerali.Services
                     while (nodes.MoveNext())
                     {
                         XPathNavigator node = nodes.Current;
-                        listRssItems.Add(new RSSItemModel
+                        RSSItemModel rssItem = new RSSItemModel
                         {
                             Category = node.SelectSingleNode("category").Value,
                             Description = node.SelectSingleNode("description").Value,
                             Guid = node.SelectSingleNode("guid").Value,
                             Link = node.SelectSingleNode("link").Value,
                             PubDate = node.SelectSingleNode("pubDate").Value,
-                            Title = node.SelectSingleNode("title").Value
-                        });
+                            Title = node.SelectSingleNode("title").Value,
+                            UserId = userId
+                        };
+                        SaveLoadedRSSes(rssItem);
+                        listRssItems.Add(rssItem);
                     }
                 }
-            }
-            catch
-            {
-                listRssItems = null;
-            }
+            //}
+            //catch
+            //{
+            //    listRssItems = null;
+            //}
             return listRssItems;
         }
+
+        private static void SaveLoadedRSSes(RSSItemModel rssItem)
+        {
+            RSSDao db = new RSSDao();
+            db.SaveRSSItem(rssItem);
+        }
+
     }
 }

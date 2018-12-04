@@ -21,9 +21,9 @@ namespace RSSWebAppGenerali.Controllers
             List<FeedLinkModel> feedLinkModels = db.LoadUserLinks(User.Identity.GetUserId());
             foreach (var feedLinkModel in feedLinkModels)
             {
-                if (RSSService.Read(feedLinkModel.Link, 2) != null)
+                if (RSSService.Read(feedLinkModel.Link, 2, User.Identity.GetUserId()) != null)
                 {
-                    rssList.Add(new RSSItemDTO(RSSService.ReadTitle(feedLinkModel.Link), RSSService.Read(feedLinkModel.Link, 2)));
+                    rssList.Add(new RSSItemDTO(RSSService.ReadTitle(feedLinkModel.Link), RSSService.Read(feedLinkModel.Link, 2, User.Identity.GetUserId())));
                 }
             }
             return View(rssList);

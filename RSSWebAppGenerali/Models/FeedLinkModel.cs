@@ -10,7 +10,5 @@ namespace RSSWebAppGenerali.Models
         public string Link { get; set; }
         public string UserId { get; set; }
         public int Id { get; set; }
-
-    }
-     
+    } 
 }

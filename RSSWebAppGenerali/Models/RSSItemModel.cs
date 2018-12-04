@@ -13,7 +13,8 @@ namespace RSSWebAppGenerali.Models
         public string Guid { get; set; }
         public string Category { get; set; }
         public string PubDate { get; set; }
-        public bool IsItRead { get; set; }
-        public bool IsItFavourite { get; set; }
+        public bool IsItRead { get; set; } = false;
+        public bool IsItFavourite { get; set; } = false;
+        public string UserId { get; set; }
     }
 }

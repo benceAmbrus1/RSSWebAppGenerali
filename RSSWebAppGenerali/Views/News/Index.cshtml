@@ -1,0 +1,43 @@
+﻿@model IEnumerable<RSSWebAppGenerali.DTOs.RSSItemDTO>
+
+@{
+    ViewBag.Title = "View";
+}
+@foreach (var item in Model)
+{
+<h2>@Html.DisplayFor(model => item.Category)</h2>
+    <table class="table">
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Link
+            </th>
+            <th>
+                Publish Date
+            </th>
+        </tr>
+        @foreach (var rssItem in item.RssList)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => rssItem.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => rssItem.Description)
+            </td>
+            <td>
+                <a href="@Html.DisplayFor(modelItem => rssItem.Link)">Ugrás a teljes hírhez</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => rssItem.PubDate)
+            </td>
+        </tr>
+        }
+    </table>
+}
+<
